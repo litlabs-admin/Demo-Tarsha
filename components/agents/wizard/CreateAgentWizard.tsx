@@ -10,6 +10,7 @@ import {
   Check,
   Rocket,
   Loader2,
+  Pause,
   Play,
   Sparkles,
   Cpu,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 import { useTarsha } from "@/context/TarshaContext";
 import { useToast } from "@/hooks/use-toast";
+import { useAudioPreview } from "@/hooks/use-audio-preview";
 import { createAgentSchema, STEP_FIELDS, AGENT_ROLES, type CreateAgentSchema } from "@/lib/schemas";
 import { SYSTEM_PROMPTS } from "@/lib/seed-data";
 import {
@@ -39,7 +41,7 @@ const STEPS = [
 ];
 
 const DEPLOY_LINES = [
-  "Provisioning VAPI agent…",
+  "Provisioning your agent…",
   "Configuring transcriber…",
   "Loading voice model…",
   "Compiling system prompt…",
@@ -102,6 +104,11 @@ function VoiceCard({
   descriptor,
   gender,
   accent,
+  region,
+  previewUrl,
+  isPlaying,
+  isLoading,
+  onPlayClick,
   onClick,
 }: {
   selected: boolean;
@@ -109,6 +116,11 @@ function VoiceCard({
   descriptor: string;
   gender: string;
   accent: string;
+  region?: string;
+  previewUrl?: string;
+  isPlaying: boolean;
+  isLoading: boolean;
+  onPlayClick: () => void;
   onClick: () => void;
 }) {
   return (
@@ -116,38 +128,68 @@ function VoiceCard({
       type="button"
       onClick={onClick}
       className={cn(
-        "focus-ring hover-lift group relative flex items-center gap-3 rounded-xl border bg-white p-3 text-left",
-        selected ? "border-[var(--brand)] ring-2 ring-[var(--brand-glow)]" : "border-[var(--surface-600)]"
+        "focus-ring group relative flex items-center gap-3.5 rounded-xl border p-3.5 text-left transition-all duration-150",
+        selected
+          ? "border-[var(--brand)] bg-[var(--brand)]/[0.06] ring-1 ring-[var(--brand)]"
+          : "border-[var(--surface-600)] bg-white hover:border-[var(--brand)]/50 hover:shadow-sm"
       )}
     >
+      {/* Avatar — fills brand colour when selected */}
       <span
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-display text-sm font-bold"
-        style={{ background: "var(--surface-500)", color: "var(--text-primary)" }}
+        className={cn(
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-display text-sm font-bold transition-colors duration-150",
+          selected
+            ? "bg-[var(--brand)] text-black"
+            : "bg-[var(--surface-500)] text-[var(--text-primary)]"
+        )}
       >
         {name.charAt(0)}
       </span>
+
+      {/* Text content */}
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-1.5">
-          <span className="text-sm font-semibold text-[var(--text-primary)]">{name}</span>
+        <span className="block text-sm font-semibold text-[var(--text-primary)]">{name}</span>
+        <span className="block truncate text-xs text-[var(--text-secondary)]">{descriptor}</span>
+        <span className="mt-1.5 flex flex-wrap items-center gap-1">
+          {region && (
+            <span className="rounded-full bg-[var(--surface-500)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--text-secondary)]">
+              {region}
+            </span>
+          )}
           <span className="rounded-full bg-[var(--surface-500)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--text-secondary)]">
             {gender}
           </span>
         </span>
-        <span className="block truncate text-xs text-[var(--text-secondary)]">
-          {descriptor} · {accent}
-        </span>
       </span>
-      <span
-        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--surface-600)] text-[var(--text-muted)] transition-colors group-hover:border-[var(--brand)] group-hover:text-[var(--brand-dim)]"
-        aria-hidden
+
+      {/* Play / pause button */}
+      <button
+        type="button"
+        aria-label={isPlaying ? `Pause ${name}` : `Preview ${name}`}
+        disabled={!previewUrl}
+        onClick={(e) => {
+          e.stopPropagation();
+          onPlayClick();
+        }}
+        className={cn(
+          "relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-150",
+          isPlaying
+            ? "border-[var(--brand)] bg-[var(--brand)] text-black"
+            : "border-[var(--surface-600)] text-[var(--text-muted)] hover:border-[var(--brand)] hover:text-[var(--brand-dim)]",
+          !previewUrl && "cursor-not-allowed opacity-25"
+        )}
       >
-        <Play size={12} className="ml-0.5" />
-      </span>
-      {selected && (
-        <span className="anim-pop absolute right-2 top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--brand)] text-black">
-          <Check size={11} />
-        </span>
-      )}
+        {isPlaying && (
+          <span className="absolute inset-0 animate-ping rounded-full bg-[var(--brand)] opacity-30" />
+        )}
+        {isLoading ? (
+          <Loader2 size={13} className="animate-spin" />
+        ) : isPlaying ? (
+          <Pause size={13} />
+        ) : (
+          <Play size={13} className="ml-0.5" />
+        )}
+      </button>
     </button>
   );
 }
@@ -158,6 +200,7 @@ export function CreateAgentWizard() {
   const router = useRouter();
   const { toast } = useToast();
   const { addAgent } = useTarsha();
+  const { playingId, loadingId, toggle, stop } = useAudioPreview();
   const [step, setStep] = useState(0);
   const [deploying, setDeploying] = useState(false);
   const [deployLine, setDeployLine] = useState(0);
@@ -192,6 +235,11 @@ export function CreateAgentWizard() {
 
   const v = watch();
   const role = v.role;
+
+  // Stop audio preview when the user leaves the voice step.
+  useEffect(() => {
+    if (step !== 2) stop();
+  }, [step, stop]);
 
   // Pre-fill the system prompt from the role template, unless the user has edited it.
   useEffect(() => {
@@ -453,6 +501,11 @@ export function CreateAgentWizard() {
                       descriptor={x.descriptor}
                       gender={x.gender}
                       accent={x.accent}
+                      region={x.region}
+                      previewUrl={x.previewUrl}
+                      isPlaying={playingId === x.voiceId}
+                      isLoading={loadingId === x.voiceId}
+                      onPlayClick={() => x.previewUrl && toggle(x.voiceId, x.previewUrl)}
                       onClick={() => pickVoice(x.voiceId, x.name, x.descriptor)}
                     />
                   ))}

@@ -91,7 +91,7 @@ export function TarshaProvider({ children }: { children: ReactNode }) {
 
     const slug = `${values.name.toLowerCase().replace(/\s+/g, "-")}-${genId().slice(0, 4)}`;
     const role = values.role as AgentRole;
-    const vapiAgentId = `${values.name.replace(/\s+/g, "_")}_${role.replace(/\s+/g, "_")}`;
+    const agentRef = `${values.name.replace(/\s+/g, "_")}_${role.replace(/\s+/g, "_")}`;
 
     const newAgent: Agent = {
       id: slug,
@@ -99,8 +99,8 @@ export function TarshaProvider({ children }: { children: ReactNode }) {
       role,
       title: role,
       status: "active",
-      vapiAgentId,
-      platform: "VAPI",
+      agentRef,
+      platform: "Tarsha",
       stt: { provider: values.sttProvider || "Deepgram", model: values.sttModel || "Nova-2" },
       language: values.language || "en-GB",
       llm: { provider: values.llmProvider, model: values.llmModel },

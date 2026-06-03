@@ -15,7 +15,7 @@ import {
  * Shared agent configuration (all Tarsha agents run on this stack)
  * ------------------------------------------------------------------ */
 const SHARED = {
-  platform: "VAPI",
+  platform: "Tarsha",
   stt: { provider: "Deepgram", model: "Nova-2" },
   language: "en-GB",
   llm: { provider: "Anthropic", model: "claude-sonnet-4-20250514" },
@@ -105,7 +105,7 @@ interface AgentSeed {
   status?: "active" | "archived";
   voiceId: string;
   voiceName: string;
-  vapiAgentId: string;
+  agentRef: string;
   keywords: string[];
   callTags: string[];
   firstMessage: string;
@@ -124,7 +124,7 @@ function makeAgent(s: AgentSeed): Agent {
     role: s.role,
     title: s.role,
     status: s.status ?? "active",
-    vapiAgentId: s.vapiAgentId,
+    agentRef: s.agentRef,
     platform: SHARED.platform,
     stt: { ...SHARED.stt },
     language: SHARED.language,
@@ -163,7 +163,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "HR Assistant",
     voiceId: "scot-ailsa-01",
     voiceName: "Ailsa — Calm & Reassuring",
-    vapiAgentId: "Grace_HR_Assistant",
+    agentRef: "Grace_HR_Assistant",
     keywords: ["HR", "recruitment", "holiday", "interview", "payroll"],
     callTags: ["Enquiry", "Scheduling", "Candidate"],
     firstMessage: "Hello, thanks for calling [Company Name] HR. I'm Grace — how can I help you today?",
@@ -188,7 +188,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Lender",
     voiceId: "scot-malcolm-01",
     voiceName: "Malcolm — Deep & Authoritative",
-    vapiAgentId: "Callum_the_lender",
+    agentRef: "Callum_the_lender",
     keywords: ["mortgage", "loan", "remortgage", "lending", "finance"],
     callTags: ["Lead", "Callback", "Qualification"],
     firstMessage: "Good day, you've reached [Company Name]. I'm Callum, your lending specialist. How can I help?",
@@ -213,7 +213,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Insurer",
     voiceId: "scot-catriona-01",
     voiceName: "Catriona — Warm & Professional",
-    vapiAgentId: "Isla_the_Insurer",
+    agentRef: "Isla_the_Insurer",
     keywords: ["insurance", "policy", "renewal", "claim", "cover"],
     callTags: ["Renewal", "Claim", "Quote"],
     firstMessage: "Hello, thanks for calling [Company Name]. I'm Isla — what can I help you with today?",
@@ -238,7 +238,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Property Guide",
     voiceId: "scot-ferrol-01",
     voiceName: "Ferrol — Bright & Friendly",
-    vapiAgentId: "Fraser_The_Property_Guide",
+    agentRef: "Fraser_The_Property_Guide",
     keywords: ["property", "viewing", "house", "flat", "buy", "rent"],
     callTags: ["Viewing", "Enquiry", "Valuation"],
     firstMessage: "Hi there, you've reached [Company Name]. I'm Fraser — are you looking to buy, sell, or rent?",
@@ -263,7 +263,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Legal Guide",
     voiceId: "scot-malcolm-02",
     voiceName: "Malcolm — Deep & Authoritative",
-    vapiAgentId: "Gordon_The_Legal_Guide",
+    agentRef: "Gordon_The_Legal_Guide",
     keywords: ["legal", "solicitor", "consultation", "contract", "dispute"],
     callTags: ["Intake", "Consultation", "Enquiry"],
     firstMessage: "Good morning, you've reached [Company Name]. I'm Gordon — how may I assist you today?",
@@ -288,7 +288,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Property Manager",
     voiceId: "scot-ewan-01",
     voiceName: "Ewan — Steady & Practical",
-    vapiAgentId: "Ross_The_Property_Manager",
+    agentRef: "Ross_The_Property_Manager",
     keywords: ["maintenance", "repair", "tenancy", "landlord", "contractor"],
     callTags: ["Maintenance", "Emergency", "Tenancy"],
     firstMessage: "Hello, you've reached [Company Name] property management. I'm Ross — how can I help?",
@@ -313,7 +313,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Franchise Guide",
     voiceId: "scot-ferrol-02",
     voiceName: "Ferrol — Bright & Friendly",
-    vapiAgentId: "Craig_The_Franchise_Guide",
+    agentRef: "Craig_The_Franchise_Guide",
     keywords: ["franchise", "investment", "opportunity", "territory", "discovery"],
     callTags: ["Prospect", "Discovery", "Qualification"],
     firstMessage: "Hi, thanks for calling [Company Name] franchising. I'm Craig — keen to hear what you're looking for!",
@@ -338,7 +338,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Host",
     voiceId: "scot-catriona-02",
     voiceName: "Catriona — Warm & Professional",
-    vapiAgentId: "Bonnie_The_Host",
+    agentRef: "Bonnie_The_Host",
     keywords: ["reservation", "table", "booking", "menu", "event"],
     callTags: ["Reservation", "Event", "Enquiry"],
     firstMessage: "Welcome to [Company Name]! I'm Bonnie — are you calling to book a table or make an enquiry?",
@@ -363,7 +363,7 @@ export const SEED_AGENTS: Agent[] = [
     role: "Style Assistant",
     voiceId: "scot-ailsa-02",
     voiceName: "Ailsa — Calm & Reassuring",
-    vapiAgentId: "Skye_The_Style_Assistant",
+    agentRef: "Skye_The_Style_Assistant",
     keywords: ["styling", "appointment", "personal shopping", "fitting", "wardrobe"],
     callTags: ["Appointment", "Preferences", "Enquiry"],
     firstMessage: "Hi, lovely to hear from you! I'm Skye, your style assistant at [Company Name]. How can I help?",
@@ -389,7 +389,7 @@ export const SEED_AGENTS: Agent[] = [
     status: "archived",
     voiceId: "legacy-bob-01",
     voiceName: "Bob — Legacy Voice",
-    vapiAgentId: "Bob_Old",
+    agentRef: "Bob_Old",
     keywords: ["legacy", "archived"],
     callTags: ["Archived"],
     firstMessage: "Hello, this is Bob. (Archived legacy agent.)",
@@ -713,11 +713,11 @@ export const SEED_REPORTS: ReportData = {
 export const SEED_PHONE_NUMBERS: PhoneNumber[] = [
   { id: "pn1", number: "+44 131 460 1188", provider: "Twilio", region: "Edinburgh, UK", assignedAgent: "Grace", direction: "Inbound", status: "active" },
   { id: "pn2", number: "+44 141 530 2247", provider: "Twilio", region: "Glasgow, UK", assignedAgent: "Callum", direction: "Both", status: "active" },
-  { id: "pn3", number: "+44 1224 060 342", provider: "Vapi", region: "Aberdeen, UK", assignedAgent: "Isla", direction: "Inbound", status: "active" },
+  { id: "pn3", number: "+44 1224 060 342", provider: "Tarsha", region: "Aberdeen, UK", assignedAgent: "Isla", direction: "Inbound", status: "active" },
   { id: "pn4", number: "+44 1382 030 455", provider: "Twilio", region: "Dundee, UK", assignedAgent: "Fraser", direction: "Inbound", status: "active" },
-  { id: "pn5", number: "+44 1463 070 566", provider: "Vapi", region: "Inverness, UK", assignedAgent: "Ross", direction: "Both", status: "active" },
+  { id: "pn5", number: "+44 1463 070 566", provider: "Tarsha", region: "Inverness, UK", assignedAgent: "Ross", direction: "Both", status: "active" },
   { id: "pn6", number: "+44 131 460 1190", provider: "Twilio", region: "Edinburgh, UK", assignedAgent: "Bonnie", direction: "Inbound", status: "active" },
-  { id: "pn7", number: "+44 20 7946 0312", provider: "Vapi", region: "London, UK", assignedAgent: null, direction: "Outbound", status: "idle" },
+  { id: "pn7", number: "+44 20 7946 0312", provider: "Tarsha", region: "London, UK", assignedAgent: null, direction: "Outbound", status: "idle" },
 ];
 
 /* ------------------------------------------------------------------ *

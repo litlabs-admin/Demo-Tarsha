@@ -140,7 +140,7 @@ export default function AgentsPage() {
                   </div>
                   <div className="text-sm text-[var(--text-secondary)]">{a.role}</div>
                 </div>
-                <div className="hidden font-mono-id text-[var(--text-muted)] md:block">{a.vapiAgentId}</div>
+                <div className="hidden font-mono-id text-[var(--text-muted)] md:block">{a.agentRef}</div>
                 <div className="hidden text-sm text-[var(--text-secondary)] sm:block">{a.callsHandled} calls</div>
                 <div className="hidden text-sm text-[var(--text-secondary)] sm:block">{a.successRate}%</div>
                 <div onClick={(e) => e.stopPropagation()}>

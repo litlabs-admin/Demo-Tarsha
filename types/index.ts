@@ -46,8 +46,8 @@ export interface Agent {
   role: AgentRole; // "HR Assistant"
   title: string; // display, e.g. "HR Assistant"
   status: AgentStatus;
-  vapiAgentId: string; // "Grace_HR_Assistant"
-  platform: string; // "VAPI"
+  agentRef: string; // "Grace_HR_Assistant"
+  platform: string; // "Tarsha"
   stt: STTConfig;
   language: string; // "en-GB"
   llm: LLMConfig;
@@ -134,7 +134,7 @@ export interface ReportData {
 export interface PhoneNumber {
   id: string;
   number: string;
-  provider: string; // "Twilio" | "Vapi"
+  provider: string; // "Twilio" | "Tarsha"
   region: string; // "Edinburgh, UK"
   assignedAgent: string | null; // agent name
   direction: "Inbound" | "Outbound" | "Both";

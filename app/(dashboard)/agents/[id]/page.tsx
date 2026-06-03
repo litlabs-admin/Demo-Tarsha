@@ -74,7 +74,7 @@ export default function AgentDetailPage() {
             <h1 className="font-display text-2xl font-bold text-[var(--text-primary)]">
               {agent.name} <span className="text-[var(--text-muted)]">— {agent.role}</span>
             </h1>
-            <p className="font-mono-id mt-1 text-[var(--text-muted)]">{agent.vapiAgentId}</p>
+            <p className="font-mono-id mt-1 text-[var(--text-muted)]">{agent.agentRef}</p>
             <div className="mt-2 flex items-center gap-2">
               <StatusBadge status={agent.status} size="sm" />
               {!archived && (
@@ -130,7 +130,7 @@ export default function AgentDetailPage() {
         <h2 className="mb-4 font-display text-base font-bold text-[var(--text-primary)]">Configuration</h2>
         <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 lg:grid-cols-5">
           <Field label="Platform" value={agent.platform} dot="#16A34A" />
-          <Field label="VAPI Agent ID" value={agent.vapiAgentId} mono />
+          <Field label="Agent ID" value={agent.agentRef} mono />
           <Field label="STT Provider" value={agent.stt.provider} dot="#2563EB" />
           <Field label="STT Model" value={agent.stt.model} />
           <Field label="Language" value={agent.language} />

@@ -36,7 +36,7 @@ export function AgentCard({ agent }: { agent: Agent }) {
       <div className="mt-3">
         <h3 className="font-display text-base font-bold text-[var(--text-primary)]">{agent.name}</h3>
         <p className="text-sm text-[var(--text-secondary)]">{agent.role}</p>
-        <p className="font-mono-id mt-1 text-[var(--text-muted)]">{agent.vapiAgentId}</p>
+        <p className="font-mono-id mt-1 text-[var(--text-muted)]">{agent.agentRef}</p>
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-2 border-t border-[var(--surface-600)] pt-3 text-center">

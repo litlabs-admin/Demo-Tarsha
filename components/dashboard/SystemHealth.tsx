@@ -1,5 +1,5 @@
 const SERVICES = [
-  { name: "VAPI", color: "#16A34A" },
+  { name: "Tarsha Core", color: "#16A34A" },
   { name: "Deepgram", color: "#16A34A" },
   { name: "Anthropic", color: "#16A34A" },
   { name: "ElevenLabs", color: "#16A34A" },
