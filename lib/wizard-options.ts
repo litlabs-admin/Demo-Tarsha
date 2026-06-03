@@ -124,8 +124,9 @@ export interface VoiceOption {
 }
 
 export const VOICES: VoiceOption[] = [
-  // ── Scottish — authentic native voices from ElevenLabs shared library ────
+  // ── Scottish — trending native voices from ElevenLabs shared library ─────
   {
+    // Isla Skye — "Scottish, Soft, and Warm"
     voiceId: "TVmbglAk3F1GkiCoOq47",
     name: "Ailsa",
     descriptor: "Calm & reassuring",
@@ -135,6 +136,7 @@ export const VOICES: VoiceOption[] = [
     previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/user/6cDV1WImonUwQcaI0lVymsrZGQ52/voices/TVmbglAk3F1GkiCoOq47/32s6eoebELgG3CvTnSUI.mp3",
   },
   {
+    // Sophie — "Warm & energetic Glaswegian"
     voiceId: "iePvrB4HtMcAormXZou7",
     name: "Catriona",
     descriptor: "Warm & professional",
@@ -144,31 +146,34 @@ export const VOICES: VoiceOption[] = [
     previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/workspace/d7f1113a0fbf4d048ac84d8b5356329a/voices/iePvrB4HtMcAormXZou7/5a78fedb-da8f-4454-a6eb-8fff43e93a76.mp3",
   },
   {
-    voiceId: "1N4VgTBW1ZGBv5IHWRAf",
+    // Sean — "Authentic, Proud and Confident"
+    voiceId: "ztnpYzQJyWffPj1VC5Uw",
     name: "Malcolm",
     descriptor: "Deep & authoritative",
     gender: "Male",
     accent: "Scottish",
     region: "Highland",
-    previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/user/icSK2QgvxeUtwIZQx0EBo62Adkd2/voices/1N4VgTBW1ZGBv5IHWRAf/9d146332-a54b-4851-a056-dfa276d4f778.mp3",
+    previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/user/feEym2GpjtR3eSyK1MP4WwIeIFs1/voices/ztnpYzQJyWffPj1VC5Uw/b3def21c-9421-4a3e-a2e7-15627fe96930.mp3",
   },
   {
-    voiceId: "91NkGjnnbyDfe6W3HV6M",
+    // Pete Gates — "Warm & Friendly Glaswegian"
+    voiceId: "eVKQybPTL0poBPxBa8L6",
     name: "Ferrol",
     descriptor: "Bright & friendly",
     gender: "Male",
     accent: "Scottish",
-    region: "Aberdeen",
-    previewUrl: "https://api.us.elevenlabs.io/v1/voices/91NkGjnnbyDfe6W3HV6M/previews/audio?payload=eyJ2b2ljZV9zb3VyY2UiOiJjdXN0b20iLCJ3b3Jrc3BhY2VfaWQiOiJmZmUzYmE0NTFhMjg0MDk0YjE0NjQ4MzJlOTY5N2MxNCIsImZpbGVuYW1lIjoiYTQ0YjQ0NDQtMTU5ZS00ODI2LWExYTQtZTNjZTBiZmJjZjVmLm1wMyIsInRpbWVzdGFtcCI6MTc4MDQ4MDgwMDAwMDAwMH0%3D",
+    region: "Glasgow",
+    previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/workspace/5caf9fd4b2054041aa6a8fc520a922a6/voices/eVKQybPTL0poBPxBa8L6/kp9KmvJCLsPax88jM3Dc.mp3",
   },
   {
-    voiceId: "m99arlGCGHhMIOwh8bGc",
+    // Mark — "Warm Scottish Narrator"
+    voiceId: "pp4ihOlfDr2MgdTALvoR",
     name: "Ewan",
     descriptor: "Steady & practical",
     gender: "Male",
     accent: "Scottish",
     region: "Dundee",
-    previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/user/0HjWexScbHeozE4hONvfVSIxkqp1/voices/m99arlGCGHhMIOwh8bGc/a36a27c9-d3db-4288-95d0-5323155c31d2.mp3",
+    previewUrl: "https://storage.googleapis.com/eleven-public-prod/database/workspace/4419ed56a73d48e1b3351e5e6c7e57fc/voices/pp4ihOlfDr2MgdTALvoR/bfbef98e-8a6e-416c-b591-b9a8089871e9.mp3",
   },
   { voiceId: "rp-eleanor-01", name: "Eleanor", descriptor: "Polished & poised", gender: "Female", accent: "English (RP)" },
   { voiceId: "rp-james-01", name: "James", descriptor: "Confident & clear", gender: "Male", accent: "English (RP)" },

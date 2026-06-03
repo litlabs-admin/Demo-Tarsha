@@ -9,18 +9,28 @@ export function useAudioPreview() {
 
   useEffect(() => {
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
+      const audio = audioRef.current;
+      if (audio) {
+        audio.oncanplay = null;
+        audio.onended = null;
+        audio.onerror = null;
+        audio.pause();
+        audio.src = "";
         audioRef.current = null;
       }
     };
   }, []);
 
   const stop = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    const audio = audioRef.current;
+    if (audio) {
+      // Clear handlers BEFORE pausing — prevents a stale oncanplay from
+      // firing after stop() and replaying the audio.
+      audio.oncanplay = null;
+      audio.onended = null;
+      audio.onerror = null;
+      audio.pause();
+      audio.currentTime = 0;
     }
     setPlayingId(null);
     setLoadingId(null);
@@ -28,16 +38,16 @@ export function useAudioPreview() {
 
   const toggle = useCallback(
     (voiceId: string, previewUrl: string) => {
-      if (playingId === voiceId) {
+      // Cancel if this voice is playing OR still loading (loadingId check
+      // was missing — caused the pause button to not work during buffering).
+      if (playingId === voiceId || loadingId === voiceId) {
         stop();
         return;
       }
+
       stop();
 
-      if (!audioRef.current) {
-        audioRef.current = new Audio();
-      }
-      const audio = audioRef.current;
+      const audio = audioRef.current ?? (audioRef.current = new Audio());
 
       setLoadingId(voiceId);
       audio.src = previewUrl;
@@ -57,7 +67,7 @@ export function useAudioPreview() {
         setLoadingId(null);
       };
     },
-    [playingId, stop]
+    [playingId, loadingId, stop]
   );
 
   return { playingId, loadingId, toggle, stop };
