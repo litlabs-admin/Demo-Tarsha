@@ -236,11 +236,6 @@ export function CreateAgentWizard() {
   const v = watch();
   const role = v.role;
 
-  // Stop audio preview when the user leaves the voice step.
-  useEffect(() => {
-    if (step !== 2) stop();
-  }, [step, stop]);
-
   // Pre-fill the system prompt from the role template, unless the user has edited it.
   useEffect(() => {
     if (!dirtyFields.systemPrompt) {
@@ -257,9 +252,10 @@ export function CreateAgentWizard() {
 
   async function next() {
     const ok = await trigger(STEP_FIELDS[step] as (keyof CreateAgentSchema)[]);
-    if (ok) setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    if (ok) { stop(); setStep((s) => Math.min(s + 1, STEPS.length - 1)); }
   }
   function back() {
+    stop();
     setStep((s) => Math.max(s - 1, 0));
   }
 
