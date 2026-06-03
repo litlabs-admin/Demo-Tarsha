@@ -67,7 +67,7 @@ export default function AgentDetailPage() {
       </Link>
 
       {/* Header */}
-      <div className="card-surface flex flex-wrap items-start justify-between gap-4 p-5">
+      <div className="anim-fade-up card-surface flex flex-wrap items-start justify-between gap-4 p-5">
         <div className="flex items-center gap-4">
           <AgentAvatar name={agent.name} role={agent.role} size="xl" muted={archived} />
           <div>

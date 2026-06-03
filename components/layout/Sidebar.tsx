@@ -10,7 +10,11 @@ import {
   FileText,
   ScrollText,
   Phone,
-  Sparkles,
+  PhoneCall,
+  Wrench,
+  Workflow as WorkflowIcon,
+  Users,
+  Gauge,
   type LucideIcon,
 } from "lucide-react";
 import { useTarsha } from "@/context/TarshaContext";
@@ -32,6 +36,15 @@ const SECTIONS: { label: string; items: NavItem[] }[] = [
     ],
   },
   {
+    label: "Build",
+    items: [
+      { label: "Phone Numbers", href: "/phone-numbers", icon: PhoneCall },
+      { label: "Tools", href: "/tools", icon: Wrench },
+      { label: "Workflows", href: "/workflows", icon: WorkflowIcon },
+      { label: "Squads", href: "/squads", icon: Users },
+    ],
+  },
+  {
     label: "Analyse",
     items: [
       { label: "Analytics", href: "/analytics", icon: BarChart3 },
@@ -50,8 +63,7 @@ function isActive(pathname: string, href: string): boolean {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { state, openCallDemo } = useTarsha();
-  const activeCount = state.agents.filter((a) => a.status === "active").length;
+  const { openCallDemo } = useTarsha();
 
   return (
     <aside
@@ -97,7 +109,7 @@ export function Sidebar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "focus-ring interactive-press flex items-center gap-2.5 rounded-lg border-l-2 px-2.5 py-2 text-sm transition-colors",
+                      "group focus-ring interactive-press flex items-center gap-2.5 rounded-lg border-l-2 px-2.5 py-2 text-sm transition-colors",
                       active
                         ? "border-[var(--brand)] bg-[var(--brand-pale)] font-medium text-[var(--text-primary)]"
                         : "border-transparent text-[var(--text-secondary)] hover:bg-[var(--surface-700)]"
@@ -130,17 +142,23 @@ export function Sidebar() {
         </div>
       </nav>
 
-      {/* Footer */}
+      {/* Footer — usage meter */}
       <div className="border-t border-[var(--surface-600)] p-3">
-        <div className="rounded-lg border border-[var(--surface-600)] bg-white px-3 py-2.5">
-          <div className="flex items-center gap-1.5 text-sm font-medium text-[var(--text-primary)]">
-            <Sparkles size={13} className="text-[var(--brand-dim)]" />
-            Tarsha Pro
+        <Link
+          href="/billing"
+          className="focus-ring hover-lift block rounded-lg border border-[var(--surface-600)] bg-white px-3 py-2.5"
+        >
+          <div className="flex items-center justify-between">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-primary)]">
+              <Gauge size={13} className="text-[var(--brand-dim)]" /> Call minutes
+            </span>
+            <span className="font-mono-id text-[var(--text-muted)]">847 / 2,000</span>
           </div>
-          <p className="font-mono-id mt-1 text-[var(--text-muted)]">
-            {state.agents.length} agents · {activeCount} active
-          </p>
-        </div>
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-500)]">
+            <div className="h-full rounded-full bg-[var(--brand)] transition-all" style={{ width: "42%" }} />
+          </div>
+          <p className="mt-1.5 text-[10px] text-[var(--text-muted)]">Tarsha Pro · renews 1 Jul</p>
+        </Link>
       </div>
     </aside>
   );

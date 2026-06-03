@@ -34,7 +34,7 @@ export default function AgentsPage() {
 
   return (
     <div className="space-y-5 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="anim-fade-up flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="font-display text-xl font-bold text-[var(--text-primary)]">
             Agents <span className="text-base font-normal text-[var(--text-muted)]">({state.agents.length})</span>
@@ -114,13 +114,13 @@ export default function AgentsPage() {
       {filtered.length === 0 ? (
         <div className="card-surface p-10 text-center text-sm text-[var(--text-muted)]">No agents match your filters.</div>
       ) : view === "grid" ? (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="stagger-in grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((a) => (
             <AgentCard key={a.id} agent={a} />
           ))}
         </div>
       ) : (
-        <div className="card-surface overflow-hidden">
+        <div className="stagger-in card-surface overflow-hidden">
           {filtered.map((a) => {
             const archived = a.status === "archived";
             return (

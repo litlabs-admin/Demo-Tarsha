@@ -1,25 +1,28 @@
 "use client";
 
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import dynamic from "next/dynamic";
+import { TrendingUp, TrendingDown, BarChart3 } from "lucide-react";
 import { SEED_REPORTS } from "@/lib/seed-data";
 import { StatCard } from "@/components/ui/StatCard";
 import { ChartCard } from "@/components/analytics/ChartCard";
 import { AgentAvatar } from "@/components/ui/AgentAvatar";
-import { tooltipStyle, tooltipLabelStyle, tooltipItemStyle } from "@/components/analytics/chartTheme";
-import { BarChart3 } from "lucide-react";
+
+const OutcomeDonut = dynamic(
+  () => import("@/components/analytics/OutcomeDonut").then((m) => m.OutcomeDonut),
+  { ssr: false, loading: () => <div className="h-full w-full rounded-lg shimmer-sweep" /> }
+);
 
 export default function ReportsPage() {
   const r = SEED_REPORTS;
 
   return (
     <div className="space-y-6 p-6">
-      <div>
+      <div className="anim-fade-up">
         <h2 className="font-display text-xl font-bold text-[var(--text-primary)]">Reports</h2>
         <p className="text-sm text-[var(--text-secondary)]">Weekly and month-over-month performance summaries.</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="stagger-in grid grid-cols-2 gap-4 lg:grid-cols-4">
         {r.weeklySummaries.map((s) => (
           <StatCard
             key={s.label}
@@ -68,17 +71,7 @@ export default function ReportsPage() {
 
         {/* Outcome breakdown */}
         <ChartCard title="Outcome Breakdown" subtitle="Distribution of call outcomes">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={r.outcomeBreakdown} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={55} outerRadius={90} paddingAngle={2}>
-                {r.outcomeBreakdown.map((o) => (
-                  <Cell key={o.name} fill={o.color} />
-                ))}
-              </Pie>
-              <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={tooltipItemStyle} formatter={(v) => `${v}%`} />
-              <Legend wrapperStyle={{ fontSize: 12 }} />
-            </PieChart>
-          </ResponsiveContainer>
+          <OutcomeDonut />
         </ChartCard>
       </div>
 

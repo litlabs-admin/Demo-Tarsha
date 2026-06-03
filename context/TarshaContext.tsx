@@ -101,8 +101,8 @@ export function TarshaProvider({ children }: { children: ReactNode }) {
       status: "active",
       vapiAgentId,
       platform: "VAPI",
-      stt: { provider: "Deepgram", model: "Nova-2" },
-      language: "en-GB",
+      stt: { provider: values.sttProvider || "Deepgram", model: values.sttModel || "Nova-2" },
+      language: values.language || "en-GB",
       llm: { provider: values.llmProvider, model: values.llmModel },
       tts: {
         provider: values.ttsProvider,
@@ -111,7 +111,7 @@ export function TarshaProvider({ children }: { children: ReactNode }) {
         accent: values.accent,
       },
       description: values.description,
-      systemPrompt: SYSTEM_PROMPTS[role] ?? values.description,
+      systemPrompt: values.systemPrompt || SYSTEM_PROMPTS[role] || values.description,
       systemPromptSummary: values.description,
       firstMessage:
         values.firstMessage ||

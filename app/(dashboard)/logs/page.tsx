@@ -38,7 +38,7 @@ export default function LogsPage() {
 
   return (
     <div className="space-y-5 p-6">
-      <div>
+      <div className="anim-fade-up">
         <h2 className="font-display text-xl font-bold text-[var(--text-primary)]">Call Logs</h2>
         <p className="text-sm text-[var(--text-secondary)]">Searchable history of every handled call.</p>
       </div>
@@ -85,7 +85,7 @@ export default function LogsPage() {
               <th className="px-5 py-2.5 font-medium">Time</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="stagger-in">
             {filtered.map((c) => (
               <tr
                 key={c.id}

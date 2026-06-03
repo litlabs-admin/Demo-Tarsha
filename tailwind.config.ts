@@ -36,7 +36,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        syne: ["var(--font-syne)", "sans-serif"],
+        satoshi: ["var(--font-satoshi)", "sans-serif"],
+        syne: ["var(--font-satoshi)", "sans-serif"],
         dm: ["var(--font-dm-sans)", "sans-serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
       },

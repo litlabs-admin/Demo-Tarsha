@@ -14,9 +14,9 @@ export function StatCard({ label, value, trend, trendLabel, icon }: StatCardProp
   const trendNegative = trend !== undefined && trend < 0;
 
   return (
-    <div className="card-surface p-5">
+    <div className="card-surface hover-lift p-5">
       <div className="flex items-start justify-between mb-4">
-        <div className="p-2 rounded-lg bg-[var(--surface-500)]">{icon}</div>
+        <div className="p-2 rounded-lg bg-[var(--surface-500)] transition-transform duration-200 hover:scale-105">{icon}</div>
         {trend !== undefined && (
           <span
             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${

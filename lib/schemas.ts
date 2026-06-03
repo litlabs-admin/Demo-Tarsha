@@ -21,20 +21,24 @@ export const createAgentSchema = z.object({
   // Step 2 — AI Configuration
   llmProvider: z.string().min(1),
   llmModel: z.string().min(1),
-  // Step 3 — Voice Configuration
+  sttProvider: z.string().min(1),
+  sttModel: z.string().min(1),
+  language: z.string().min(1),
+  // Step 3 — Voice & Behaviour
   ttsProvider: z.string().min(1),
   voiceId: z.string().min(1, "Select a voice"),
   voiceName: z.string().min(1),
   accent: z.string().min(1),
   firstMessage: z.string().optional(),
+  systemPrompt: z.string().min(20, "System prompt must be at least 20 characters"),
 });
 
 export type CreateAgentSchema = z.infer<typeof createAgentSchema>;
 
 export const STEP_FIELDS: Record<number, (keyof CreateAgentSchema)[]> = {
   0: ["name", "role", "description"],
-  1: ["llmProvider", "llmModel"],
-  2: ["ttsProvider", "voiceId", "voiceName", "accent"],
+  1: ["llmProvider", "llmModel", "sttProvider", "sttModel", "language"],
+  2: ["ttsProvider", "voiceId", "voiceName", "accent", "systemPrompt"],
   3: [],
 };
 

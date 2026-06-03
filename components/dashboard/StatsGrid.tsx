@@ -11,7 +11,7 @@ export function StatsGrid() {
   const archived = state.agents.filter((a) => a.status === "archived").length;
 
   return (
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="stagger-in grid grid-cols-2 gap-4 lg:grid-cols-4">
       <StatCard
         label="Total Agents"
         value={String(total)}

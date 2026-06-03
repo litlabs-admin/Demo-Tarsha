@@ -131,17 +131,59 @@ export interface ReportData {
   outcomeBreakdown: { name: string; value: number; color: string }[];
 }
 
+export interface PhoneNumber {
+  id: string;
+  number: string;
+  provider: string; // "Twilio" | "Vapi"
+  region: string; // "Edinburgh, UK"
+  assignedAgent: string | null; // agent name
+  direction: "Inbound" | "Outbound" | "Both";
+  status: "active" | "idle";
+}
+
+export interface ToolConfig {
+  id: string;
+  name: string;
+  provider: string;
+  category: string;
+  description: string;
+  enabled: boolean;
+}
+
+export interface Workflow {
+  id: string;
+  name: string;
+  description: string;
+  steps: number;
+  trigger: string;
+  status: "active" | "draft";
+  nodes: string[]; // simple node labels for the flow visual
+}
+
+export interface Squad {
+  id: string;
+  name: string;
+  description: string;
+  members: string[]; // agent names, in handoff order
+  transferRules: number;
+  status: "active" | "draft";
+}
+
 export interface CreateAgentFormValues {
   name: string;
   role: AgentRole;
   description: string;
   llmProvider: string;
   llmModel: string;
+  sttProvider: string;
+  sttModel: string;
+  language: string;
   ttsProvider: string;
   voiceId: string;
   voiceName: string;
   accent: string;
   firstMessage?: string;
+  systemPrompt: string;
 }
 
 export interface DemoFormValues {

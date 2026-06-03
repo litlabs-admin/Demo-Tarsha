@@ -2,7 +2,7 @@ import { RainbowMetricBar } from "@/components/ui/RainbowMetricBar";
 
 export function PerformanceSummary() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div className="stagger-in grid grid-cols-1 gap-4 sm:grid-cols-3">
       <div className="card-surface p-5">
         <RainbowMetricBar value={86} label="Success Rate" sublabel="avg across active agents" />
       </div>

@@ -33,7 +33,7 @@ export default function DocsPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
+      <div className="anim-fade-up mb-6">
         <h2 className="font-display text-xl font-bold text-[var(--text-primary)]">Documentation</h2>
         <p className="text-sm text-[var(--text-secondary)]">Everything you need to build with Tarsha AI.</p>
       </div>
@@ -49,14 +49,14 @@ export default function DocsPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_220px]">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="stagger-in grid grid-cols-1 gap-4 sm:grid-cols-2">
           {filtered.map((c) => {
             const Icon = c.icon;
             return (
               <button
                 key={c.title}
                 onClick={() => toast({ title: c.title, description: "Docs section opens in the full product." })}
-                className="card-surface card-hover focus-ring interactive-press flex flex-col items-start p-5 text-left"
+                className="card-surface hover-lift focus-ring interactive-press flex flex-col items-start p-5 text-left"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: "var(--brand-glow)" }}>
                   <Icon size={18} className="text-[var(--brand-dim)]" />

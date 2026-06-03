@@ -21,7 +21,7 @@ export function AgentCard({ agent }: { agent: Agent }) {
   return (
     <div
       onClick={() => router.push(`/agents/${agent.id}`)}
-      className={`card-surface card-hover focus-ring interactive-press flex cursor-pointer flex-col p-4 ${
+      className={`card-surface hover-lift focus-ring interactive-press flex cursor-pointer flex-col p-4 ${
         archived ? "opacity-60" : ""
       }`}
       role="button"

@@ -5,6 +5,10 @@ import {
   Notification,
   AnalyticsData,
   ReportData,
+  PhoneNumber,
+  ToolConfig,
+  Workflow,
+  Squad,
 } from "@/types";
 
 /* ------------------------------------------------------------------ *
@@ -702,3 +706,48 @@ export const SEED_REPORTS: ReportData = {
     { name: "Missed", value: 8, color: "#DC2626" },
   ],
 };
+
+/* ------------------------------------------------------------------ *
+ * Phone Numbers
+ * ------------------------------------------------------------------ */
+export const SEED_PHONE_NUMBERS: PhoneNumber[] = [
+  { id: "pn1", number: "+44 131 460 1188", provider: "Twilio", region: "Edinburgh, UK", assignedAgent: "Grace", direction: "Inbound", status: "active" },
+  { id: "pn2", number: "+44 141 530 2247", provider: "Twilio", region: "Glasgow, UK", assignedAgent: "Callum", direction: "Both", status: "active" },
+  { id: "pn3", number: "+44 1224 060 342", provider: "Vapi", region: "Aberdeen, UK", assignedAgent: "Isla", direction: "Inbound", status: "active" },
+  { id: "pn4", number: "+44 1382 030 455", provider: "Twilio", region: "Dundee, UK", assignedAgent: "Fraser", direction: "Inbound", status: "active" },
+  { id: "pn5", number: "+44 1463 070 566", provider: "Vapi", region: "Inverness, UK", assignedAgent: "Ross", direction: "Both", status: "active" },
+  { id: "pn6", number: "+44 131 460 1190", provider: "Twilio", region: "Edinburgh, UK", assignedAgent: "Bonnie", direction: "Inbound", status: "active" },
+  { id: "pn7", number: "+44 20 7946 0312", provider: "Vapi", region: "London, UK", assignedAgent: null, direction: "Outbound", status: "idle" },
+];
+
+/* ------------------------------------------------------------------ *
+ * Tools
+ * ------------------------------------------------------------------ */
+export const SEED_TOOLS: ToolConfig[] = [
+  { id: "t1", name: "Book Appointment", provider: "Google Calendar", category: "Scheduling", description: "Create calendar events and confirm booking slots during a call.", enabled: true },
+  { id: "t2", name: "CRM Lookup", provider: "HubSpot", category: "Data", description: "Fetch caller history and contact details from the CRM in real time.", enabled: false },
+  { id: "t3", name: "Send Follow-up SMS", provider: "Twilio", category: "Messaging", description: "Send confirmations and reminders by text after the call ends.", enabled: true },
+  { id: "t4", name: "Knowledge Base", provider: "Tarsha RAG", category: "Retrieval", description: "Answer questions from your uploaded documents and FAQs.", enabled: true },
+  { id: "t5", name: "Transfer Call", provider: "Twilio", category: "Routing", description: "Warm-transfer the caller to a human agent or department.", enabled: true },
+  { id: "t6", name: "Take Payment", provider: "Stripe", category: "Payments", description: "Securely capture card payments over the phone (PCI compliant).", enabled: false },
+];
+
+/* ------------------------------------------------------------------ *
+ * Workflows
+ * ------------------------------------------------------------------ */
+export const SEED_WORKFLOWS: Workflow[] = [
+  { id: "wf1", name: "Appointment Scheduling", description: "Qualifies the request, checks availability, and books a slot end-to-end.", steps: 5, trigger: "Inbound call", status: "active", nodes: ["Greet", "Qualify", "Check availability", "Book slot", "Confirm"] },
+  { id: "wf2", name: "Lead Qualification", description: "Scores inbound enquiries and routes hot leads to a human adviser.", steps: 4, trigger: "Inbound call", status: "active", nodes: ["Greet", "Capture details", "Score lead", "Route / book callback"] },
+  { id: "wf3", name: "Out-of-Hours Routing", description: "Handles after-hours calls, takes a message, and books a callback.", steps: 3, trigger: "Schedule (after 6pm)", status: "active", nodes: ["Greet", "Capture message", "Schedule callback"] },
+  { id: "wf4", name: "Complaint Escalation", description: "Detects sentiment, expresses empathy, and escalates to a manager.", steps: 4, trigger: "Sentiment < 0.3", status: "draft", nodes: ["Detect sentiment", "Acknowledge", "Capture details", "Escalate"] },
+];
+
+/* ------------------------------------------------------------------ *
+ * Squads
+ * ------------------------------------------------------------------ */
+export const SEED_SQUADS: Squad[] = [
+  { id: "sq1", name: "Property Squad", description: "Front-line property enquiries hand off to property management for tenancy issues.", members: ["Fraser", "Ross"], transferRules: 3, status: "active" },
+  { id: "sq2", name: "Advisory Squad", description: "Lending enquiries route to the legal guide for regulated guidance and intake.", members: ["Callum", "Gordon"], transferRules: 2, status: "active" },
+  { id: "sq3", name: "Specialist Squad", description: "Insurance reception escalates franchise and commercial enquiries to a specialist.", members: ["Isla", "Craig"], transferRules: 4, status: "active" },
+  { id: "sq4", name: "Front Desk Squad", description: "Reception triages callers and hands off to the right specialist.", members: ["Grace", "Bonnie", "Skye"], transferRules: 5, status: "draft" },
+];
